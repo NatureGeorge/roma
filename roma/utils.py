@@ -227,7 +227,7 @@ def quat_action(q, v, is_normalized=False):
     """
     batch_shape = v.shape[:-1]
     iquat = quat_conjugation(q) if is_normalized else quat_inverse(q)
-    pure = torch.cat((v, torch.zeros(batch_shape + (1,))), dim=-1)
+    pure = torch.cat((v, torch.zeros(batch_shape + (1,), dtype=v.dtype, device=v.device)), dim=-1)
     res = quat_product(q, quat_product(pure, iquat))
     return res[...,:3]
 
